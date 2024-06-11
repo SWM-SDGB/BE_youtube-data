@@ -25,7 +25,7 @@ def proccess(url,index,folder):
     if os.path.exists(csv_file):
       os.remove(csv_file)
     if os.path.exists(json_file):
-      os.remove(csv_file)
+      os.remove(json_file)
     pass
 
 async def async_process(url,video_id,folder):
