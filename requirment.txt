@@ -1,0 +1,6 @@
+ray==2.24.0
+selenium==4.21.0
+webdriver_manager==4.0.1
+pytchat==0.5.5
+pandas==2.2.2
+bs4==0.0.2
