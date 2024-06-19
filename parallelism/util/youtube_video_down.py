@@ -1,15 +1,17 @@
 import yt_dlp
 
-URLS = ['https://www.youtube.com/watch?v=BaW_jenozKc']
+async def get_video_sound(video_id, folder): 
+    URLS = ['https://www.youtube.com/watch?v=nukfvhDi6oI&t=7236s']
 
-ydl_opts = {
-    'format': 'm4a/bestaudio/best',
-    # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
-    'postprocessors': [{  # Extract audio using ffmpeg
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'm4a',
-    }]
-}
+    ydl_opts = {
+        'format': 'm4a/bestaudio/best',
+        'outtmpl': './{folder}/{videoId}',
+        # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
+        'postprocessors': [{  # Extract audio using ffmpeg
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'm4a',
+        }]
+    }
 
-with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    error_code = ydl.download(URLS)
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        error_code = ydl.download(URLS)
