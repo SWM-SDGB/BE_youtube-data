@@ -36,7 +36,7 @@ def proccess(url, index, folder):
 
 
 async def async_process(url, video_id, folder):
-    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(video_id, folder))
+    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(url, video_id, folder))
                          
 
 
