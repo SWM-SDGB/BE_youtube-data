@@ -6,6 +6,7 @@ import ray
 from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
 from util.youtube_livechat_crawling_nonBuffer import live_chat
 from util.youtube_parsing_viewing_distribution import html_parsing
+from util.youtube_video_down import get_video_sound
 
 ray.init(num_cpus=10, dashboard_host="0.0.0.0")
 
@@ -24,15 +25,19 @@ def proccess(url, index, folder):
         print(f"Error processing {url}: {e.message}")
         csv_file = videoId + ".csv"
         json_file = videoId + ".json"
+        audio_file = videoId + ".m4a"
         if os.path.exists(csv_file):
             os.remove(csv_file)
         if os.path.exists(json_file):
             os.remove(json_file)
+        if os.path.exists(audio_file):
+            os.remove(audio_file)
         pass
 
 
 async def async_process(url, video_id, folder):
-    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder))
+    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(url, video_id, folder))
+                         
 
 
 def get_video_id(youtube_url):
