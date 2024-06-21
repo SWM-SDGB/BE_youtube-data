@@ -3,8 +3,6 @@ import yt_dlp
 async def get_video_sound(url, video_id, folder): 
 
 # URLS = ['https://www.youtube.com/watch?v=nukfvhDi6oI&t=7236s']
-    folder = 'test'
-    video_id = '1'
     ydl_opts = {
         'format': 'm4a/bestaudio/best',
         'outtmpl': f"./{folder}/{video_id}",
