@@ -50,3 +50,8 @@ def get_start_date(description_inner_text): # return ex) "2024/06/21 18:09"
   else:
     print("조회수를 찾을 수 없습니다.")
     return
+
+def get_hash_tag(description_inner_text): # return ex) "#mbti#최고민수#이창호"
+  hashtag_pattern = re.compile(r'#\S+')
+  hashtags = hashtag_pattern.findall(description_inner_text)
+  return ''.join(hashtags)
