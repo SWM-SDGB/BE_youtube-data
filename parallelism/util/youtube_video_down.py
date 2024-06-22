@@ -2,6 +2,20 @@ import os
 
 import yt_dlp
 
+
+class MyLogger:
+    def debug(self, msg):
+        pass
+
+    def info(self, msg):
+        print(msg)
+
+    def warning(self, msg):
+        print(msg)
+
+    def error(self, msg):
+        print(msg)
+
 async def get_video_sound(url, video_id, folder):
     filename = video_id+'.m4a'
     file_path = os.path.join(folder,filename)
@@ -12,6 +26,7 @@ async def get_video_sound(url, video_id, folder):
         ydl_opts = {
             'format': 'm4a/bestaudio/best',
             'outtmpl': f"./{folder}/{video_id}",
+            'logger': MyLogger(),
             # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
             'postprocessors': [{  # Extract audio using ffmpeg
                 'key': 'FFmpegExtractAudio',
