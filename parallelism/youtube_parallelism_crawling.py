@@ -1,8 +1,12 @@
 import asyncio
 import os
 import time
+import traceback
+
 import ray
 
+from parallelism.lock.SystemMutex import SystemMutex
+from parallelism.summary.summary_generate import generate_summary_csv
 from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
 from util.youtube_livechat_crawling_nonBuffer import live_chat
 from util.youtube_parsing_viewing_distribution import html_parsing
@@ -21,8 +25,14 @@ def proccess(url, index, folder):
 
     try:
         asyncio.run(async_process(url, videoId, folder))
+        with SystemMutex('critical-section'):
+            generate_summary_csv(url,folder)
     except Exception as e:
-        print(f"Error processing {url}: {e.message}")
+        try:
+            print(f"Error processing {url}: {e.message}")
+        except AttributeError:
+            print("[Unknown Error]")
+            traceback.print_exc()
         csv_file = videoId + ".csv"
         json_file = videoId + ".json"
         audio_file = videoId + ".m4a"
