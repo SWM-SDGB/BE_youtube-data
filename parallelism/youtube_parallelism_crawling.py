@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sys
 import time
 import ray
 
@@ -51,6 +52,15 @@ def ensure_folder_exists(folder_path):
         print(f"Folder '{folder_path}' created.")
     else:
         print(f"Folder '{folder_path}' already exists.")
+        overwrite = input("그대로 진행하시겠습니까? (Y/N): ").strip().lower()
+        if overwrite == 'y':
+            print("기존 폴더를 유지합니다.")
+        elif overwrite == 'n':
+            print("프로그램을 종료합니다.")
+            sys.exit()
+        else:
+            print("잘못된 입력입니다. 프로그램을 종료합니다.")
+            sys.exit()
 
 
 if __name__ == "__main__":
