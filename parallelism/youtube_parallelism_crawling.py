@@ -1,58 +1,20 @@
-import asyncio
 import os
+import sys
 import time
-import traceback
-
 import ray
 
-from parallelism.lock.SystemMutex import SystemMutex
-from parallelism.summary.summary_generate import generate_summary_csv
-from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
-from util.youtube_livechat_crawling_nonBuffer import live_chat
-from util.youtube_parsing_viewing_distribution import html_parsing
-from util.youtube_video_down import get_video_sound
+from parallelism.util.ray.ray_process_legacy import process
+from parallelism.util.youtube_live_video_list_crawling import get_video_urls_by_selenium
 
 ray.init(num_cpus=10, dashboard_host="0.0.0.0")
-
-folder = "./15yafullmoon"
 channel_id = "@15ya.fullmoon"
 
+def remove_leading_at_sign(s):
+    if s.startswith('@'):
+        return s[1:]
+    return s
 
-@ray.remote
-def proccess(url, index, folder):
-    videoId = get_video_id(url)
-    print(f"URL: {url} -> Video ID: {videoId} #index {index}")
-
-    try:
-        asyncio.run(async_process(url, videoId, folder))
-        with SystemMutex('critical-section'):
-            generate_summary_csv(url,folder)
-    except Exception as e:
-        try:
-            print(f"Error processing {url}: {e.message}")
-        except AttributeError:
-            print("[Unknown Error]")
-            traceback.print_exc()
-        csv_file = videoId + ".csv"
-        json_file = videoId + ".json"
-        audio_file = videoId + ".m4a"
-        if os.path.exists(csv_file):
-            os.remove(csv_file)
-        if os.path.exists(json_file):
-            os.remove(json_file)
-        if os.path.exists(audio_file):
-            os.remove(audio_file)
-        pass
-
-
-async def async_process(url, video_id, folder):
-    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(url, video_id, folder))
-                         
-
-
-def get_video_id(youtube_url):
-    return youtube_url.split("v=")[1]
-
+default_folder = "./data/"+remove_leading_at_sign(channel_id)
 
 def ensure_folder_exists(folder_path):
     if not os.path.exists(folder_path):
@@ -60,11 +22,23 @@ def ensure_folder_exists(folder_path):
         print(f"Folder '{folder_path}' created.")
     else:
         print(f"Folder '{folder_path}' already exists.")
+        overwrite = input("그대로 진행하시겠습니까? (Y/N): ").strip().lower()
+        if overwrite == 'y':
+            print("기존 폴더를 유지합니다.")
+        elif overwrite == 'n':
+            print("프로그램을 종료합니다.")
+            sys.exit()
+        else:
+            print("잘못된 입력입니다. 프로그램을 종료합니다.")
+            sys.exit()
 
 
-if __name__ == "__main__":
+def ray_execute(channel_id,ray_process_func,folder):
+
+    if str(folder) == 'None':
+        folder = default_folder
+
     start = time.time()
-
     ensure_folder_exists(folder)
 
     video_urls = get_video_urls_by_selenium(channel_id)
@@ -72,9 +46,13 @@ if __name__ == "__main__":
     print("총 비디오 개수 : " + str(tasks))
 
     result_url = []
-    [result_url.append((proccess.remote(video_urls[task], task, folder))) for task in range(tasks)]
+    [result_url.append((ray_process_func.remote(video_urls[task], task, folder))) for task in range(tasks)]
     result = ray.get(result_url)
 
     end = time.time()
     print(f"총 걸린시간 - {end-start}")
     print(f"results count - {str(len(result))}")
+
+if __name__ == "__main__":
+    ray_execute(channel_id,process,default_folder)
+

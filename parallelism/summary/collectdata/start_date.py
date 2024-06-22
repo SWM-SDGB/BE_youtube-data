@@ -8,7 +8,7 @@ def get_start_date(description_inner_text): # return ex) "2024/06/21"
     unit = match.group(2) # 시간 단위
     return convert_datetime(time, unit)
   else:
-    print("조회수를 찾을 수 없습니다.")
+    print(f"스트리밍 시작일 찾을 수 없습니다. match={match}")
     return
 
 def convert_datetime(time, unit):
