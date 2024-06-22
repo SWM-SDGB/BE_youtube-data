@@ -1,14 +1,18 @@
 import asyncio
 import os
 import time
+import traceback
+
 import ray
 
+from parallelism.Lock.SystemMutex import SystemMutex
+from parallelism.summary.summary_generate import generate_summary_csv
 from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
 from util.youtube_livechat_crawling_nonBuffer import live_chat
 from util.youtube_parsing_viewing_distribution import html_parsing
 from util.youtube_video_down import get_video_sound
 
-ray.init(num_cpus=10, dashboard_host="0.0.0.0")
+ray.init(num_cpus=1, dashboard_host="0.0.0.0")
 
 folder = "./15yafullmoon"
 channel_id = "@15ya.fullmoon"
@@ -22,7 +26,11 @@ def proccess(url, index, folder):
     try:
         asyncio.run(async_process(url, videoId, folder))
     except Exception as e:
-        print(f"Error processing {url}: {e.message}")
+        try:
+            print(f"Error processing {url}: {e.message}")
+        except AttributeError:
+            print("[Unknown Error]")
+            traceback.print_exc()
         csv_file = videoId + ".csv"
         json_file = videoId + ".json"
         audio_file = videoId + ".m4a"

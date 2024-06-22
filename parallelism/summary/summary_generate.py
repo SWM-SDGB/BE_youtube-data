@@ -1,4 +1,5 @@
 import csv
+import os
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -11,14 +12,13 @@ from parallelism.summary.collectdata.collection_date import get_collection_date
 from parallelism.summary.collectdata.hash_tag import get_hash_tag
 from parallelism.summary.collectdata.start_date import get_start_date
 from parallelism.summary.collectdata.video_name import get_video_name
+from parallelism.summary.collectdata.view_score import get_view_score
 
 
-def generate_summary_csv(url,filename):
+def generate_summary_csv(url,folder):
+  filename = folder+"/summary.csv"
   summary_data = summary_collect_data(url)
-  save_to_csv(summary_data[0], summary_data[1], summary_data[2], summary_data[3],
-              filename)
-
-  print(f"데이터가 {filename} 파일로 저장되었습니다.")
+  save_to_csv(summary_data,filename)
 
 def summary_collect_data(url):
   # Chrome 드라이버 옵션 설정
@@ -47,26 +47,29 @@ def summary_collect_data(url):
   collection_date = get_collection_date()
   start_date = get_start_date(description_inner.text)
   hash_tag = get_hash_tag(description_inner.text)
+  view_score = get_view_score(description_inner.text)
 
-  print(f"""
-    video_name = {video_name}
-    collection_date = {collection_date}
-    start_date = {start_date}
-    hash_tag = {hash_tag}
-  """)
+  # print(f"""
+  #   video_name = {video_name}
+  #   collection_date = {collection_date}
+  #   start_date = {start_date}
+  #   hash_tag = {hash_tag}
+  # """)
 
-  return [video_name,collection_date,start_date,hash_tag]
+  return [video_name,collection_date,start_date,hash_tag,view_score]
 
-def save_to_csv(str1, str2, str3, str4, filename):
-  # 데이터 준비
-  data = [['video_name', 'collection_date', 'start_date', 'hash_tag'],  # 컬럼명
-          [str1, str2, str3, str4]]  # 데이터
+def save_to_csv(summary_data, filename):
+  headers = ['video_name', 'collection_date', 'start_date', 'hash_tag',"view_score"]  # 컬럼명
+  file_exists = os.path.isfile(filename)
 
-  # CSV 파일 작성
-  with open(filename, mode='w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file,delimiter="\\")
-    writer.writerows(data)
+  with open(filename, mode='a', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file, delimiter='\\')
+    if not file_exists:
+      # 파일이 존재하지 않으면 컬럼명 추가
+      writer.writerow(headers)
+    # 데이터 추가
+    writer.writerow(summary_data)
 
 
 if __name__ == '__main__':
-  generate_summary_csv('https://www.youtube.com/watch?v=MPf9LfHZEGs',"outputs.csv")
+  generate_summary_csv('https://www.youtube.com/watch?v=MPf9LfHZEGs',"../")
