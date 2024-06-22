@@ -3,8 +3,10 @@ from bs4 import BeautifulSoup
 import re
 import json
 
-from exception.EmptyViewingDistributionException import EmptyViewingDistributionException
-from exception.ParseViewingUnknownException import ParseViewingUnknownException
+from parallelism.exception.EmptyViewingDistributionException import \
+    EmptyViewingDistributionException
+from parallelism.exception.ParseViewingUnknownException import \
+    ParseViewingUnknownException
 
 
 async def html_parsing(url, videoId, folder):

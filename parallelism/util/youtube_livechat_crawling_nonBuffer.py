@@ -1,8 +1,10 @@
 import pytchat
 import pandas as pd
 from collections import defaultdict
-from exception.EmptyLiveChatException import EmptyLiveChatException
-from exception.LiveChatUnknownException import LiveChatUnknownException
+
+from parallelism.exception.EmptyLiveChatException import EmptyLiveChatException
+from parallelism.exception.LiveChatUnknownException import \
+    LiveChatUnknownException
 
 
 async def live_chat(videoId, folder):

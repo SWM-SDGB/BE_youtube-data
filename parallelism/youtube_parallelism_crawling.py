@@ -4,11 +4,9 @@ import time
 import ray
 
 from parallelism.util.ray.ray_process_legacy import process
-from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
-
+from parallelism.util.youtube_live_video_list_crawling import get_video_urls_by_selenium
 
 ray.init(num_cpus=10, dashboard_host="0.0.0.0")
-
 channel_id = "@15ya.fullmoon"
 
 def remove_leading_at_sign(s):
