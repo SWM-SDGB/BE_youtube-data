@@ -7,6 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 
+from parallelism.parser.url_parser import url_by_channel_id
+
 VIDEO_TABLE_ELEMENTS = "div[id='content'] div[class='style-scope ytd-rich-item-renderer']"
 WEB_DRIVER_WAIT_TIMEOUT = 10
 SCROLL_DOWN_WAIT = 1
@@ -29,8 +31,6 @@ def get_video_urls_by_selenium(channel_id):
   content_elements = driver.find_elements(By.CSS_SELECTOR, VIDEO_TABLE_ELEMENTS)
   return parse_video_url(content_elements)
 
-def url_by_channel_id(channel_id):
-  return 'https://www.youtube.com/'+channel_id+'/streams'
 
 def scroll_down(driver):
 

@@ -3,6 +3,7 @@ import ray
 
 from parallelism.exception.error_handling import errorHandling
 from parallelism.lock.SystemMutex import SystemMutex
+from parallelism.parser.url_parser import get_video_id
 from parallelism.summary.summary_generate import generate_summary_csv
 from parallelism.util.youtube_livechat_crawling_nonBuffer import live_chat
 from parallelism.util.youtube_parsing_viewing_distribution import html_parsing
@@ -26,5 +27,3 @@ def process(url, index, folder):
 async def async_process(url, video_id, folder):
   await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(url, video_id, folder))
 
-def get_video_id(youtube_url):
-  return youtube_url.split("v=")[1]
