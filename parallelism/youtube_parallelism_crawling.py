@@ -1,10 +1,9 @@
 import asyncio
 import os
 import time
-import traceback
-
 import ray
 
+from parallelism.exception.error_handling import errorHandling
 from parallelism.lock.SystemMutex import SystemMutex
 from parallelism.summary.summary_generate import generate_summary_csv
 from util.youtube_live_video_list_crawling import get_video_urls_by_selenium
@@ -34,21 +33,7 @@ def proccess(url, index, folder):
         with SystemMutex('critical-section'):
             generate_summary_csv(url,folder)
     except Exception as e:
-        try:
-            print(f"Error processing {url}: {e.message}")
-        except AttributeError:
-            print("[Unknown Error]")
-            traceback.print_exc()
-        csv_file = videoId + ".csv"
-        json_file = videoId + ".json"
-        audio_file = videoId + ".m4a"
-        if os.path.exists(csv_file):
-            os.remove(csv_file)
-        if os.path.exists(json_file):
-            os.remove(json_file)
-        if os.path.exists(audio_file):
-            os.remove(audio_file)
-        pass
+        errorHandling(e,url,videoId)
 
 
 async def async_process(url, video_id, folder):
