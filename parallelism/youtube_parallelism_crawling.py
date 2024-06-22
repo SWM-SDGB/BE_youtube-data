@@ -14,8 +14,14 @@ from util.youtube_video_down import get_video_sound
 
 ray.init(num_cpus=10, dashboard_host="0.0.0.0")
 
-folder = "./15yafullmoon"
 channel_id = "@15ya.fullmoon"
+
+def remove_leading_at_sign(s):
+    if s.startswith('@'):
+        return s[1:]
+    return s
+
+default_folder = "./data/"+remove_leading_at_sign(channel_id)
 
 
 @ray.remote
@@ -65,14 +71,14 @@ def ensure_folder_exists(folder_path):
 if __name__ == "__main__":
     start = time.time()
 
-    ensure_folder_exists(folder)
+    ensure_folder_exists(default_folder)
 
     video_urls = get_video_urls_by_selenium(channel_id)
     tasks = len(video_urls)
     print("총 비디오 개수 : " + str(tasks))
 
     result_url = []
-    [result_url.append((proccess.remote(video_urls[task], task, folder))) for task in range(tasks)]
+    [result_url.append((proccess.remote(video_urls[task], task, default_folder))) for task in range(tasks)]
     result = ray.get(result_url)
 
     end = time.time()
