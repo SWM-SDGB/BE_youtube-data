@@ -1,9 +1,9 @@
+import os
 import sys
 
-from src.__main__ import default_folder
 import ray
-import os
 
+from src.__main__ import default_folder
 from src.core.crwaling.youtube_live_video_list_crawling import \
   get_video_urls_by_selenium
 

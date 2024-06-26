@@ -1,15 +1,11 @@
+import json
 import os
+import re
 
 import requests
 from bs4 import BeautifulSoup
-import re
-import json
 
 from src.exception.CustomException import CustomException
-from src.exception.EmptyViewingDistributionException import \
-    EmptyViewingDistributionException
-from src.exception.ParseViewingUnknownException import \
-    ParseViewingUnknownException
 
 
 async def html_parsing(url, videoId, folder):

@@ -1,7 +1,9 @@
 import re
 from datetime import datetime
+
 from src.globals import global_timestamp_format
 from src.parser.url_parser import convert_datetime
+
 
 class VideoInfoExtractor:
   def __init__(self):

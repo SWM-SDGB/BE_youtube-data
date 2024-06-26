@@ -43,5 +43,4 @@ if __name__ == "__main__":
       args.cpus = {globals.args["cpus"]}
     """)
 
-  ray.init(num_cpus=globals.args["cpus"], dashboard_host="0.0.0.0", ignore_reinit_error=True)
   ray_execute(args_process)
