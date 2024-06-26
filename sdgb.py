@@ -31,7 +31,7 @@ if __name__ == "__main__":
   globals.args["all"] = args.all
   globals.args["channel_id"] = args.channel_id
   globals.args["cpus"] = args.cpus
-  globals.args["folder"] = args.folder
+  globals.args["folder"] = args.channel_id[1:] if args.folder is None else args.folder
   globals.args["viewing"] = args.viewing
 
   print(f"""

@@ -16,6 +16,7 @@ from src.summary.summary_generate import generate_summary_csv
 옵션을 통해 실행할 task를 지정할 수 있습니다.
 """
 
+ray.init(num_cpus=globals.args["cpus"], dashboard_host="0.0.0.0")
 @ray.remote
 def args_process(url, index, folder):
   video_id = get_video_id(url)

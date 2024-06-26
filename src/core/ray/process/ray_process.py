@@ -9,11 +9,11 @@ from src.exception.error_handling import error_handling
 from src.lock.SystemMutex import SystemMutex
 from src.parser.url_parser import get_video_id
 from src.summary.summary_generate import generate_summary_csv
-
+from src import globals
 """
 모든 crwaling task를 실행하는 레거시 Process 입니다.
 """
-
+ray.init(num_cpus=globals.args["cpus"], dashboard_host="0.0.0.0")
 @ray.remote
 def process(url, index, folder):
   video_id = get_video_id(url)

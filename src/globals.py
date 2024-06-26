@@ -3,7 +3,7 @@ args = {"viewing": False,
         "all": False,
         "sound" : False,
         "channel_id" : "",
-        "cpus" : 0,
+        "cpus" : 10,
         "folder" : ""
         }
 
