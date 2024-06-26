@@ -6,3 +6,5 @@ args = {"viewing": False,
         "cpus" : 0,
         "folder" : ""
         }
+
+global_timestamp_format = "%Y/%m/%d"

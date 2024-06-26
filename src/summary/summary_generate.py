@@ -8,19 +8,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
-from src.summary.collectdata.collection_date import get_collection_date
-from src.summary.collectdata.hash_tag import get_hash_tag
-from src.summary.collectdata.start_date import get_start_date
-from src.summary.collectdata.video_name import get_video_name
-from src.summary.collectdata.view_score import get_view_score
+from src.summary.VideoInfoExtractor import VideoInfoExtractor
 
 
 def generate_summary_csv(url,folder):
   filename = folder+"/summary.csv"
-  summary_data = summary_collect_data(url)
+  summary_data = get_summary_data_by_selenium(url)
   save_to_csv(summary_data,filename)
 
-def summary_collect_data(url):
+def get_summary_data_by_selenium(url):
   # Chrome 드라이버 옵션 설정
   options = webdriver.ChromeOptions()
   options.add_argument("--headless")
@@ -42,18 +38,19 @@ def summary_collect_data(url):
         오늘은,, 성규가,,, …
        ...더보기
   """
-
-  video_name = get_video_name(driver)
-  collection_date = get_collection_date()
-  start_date = get_start_date(description_inner.text)
-  hash_tag = get_hash_tag(description_inner.text)
-  view_score = get_view_score(description_inner.text)
+  extractor = VideoInfoExtractor()
+  video_name = extractor.get_video_name(driver.title)
+  collection_date = extractor.get_collection_date()
+  start_date = extractor.get_start_date(description_inner.text)
+  hash_tag = extractor.get_hash_tag(description_inner.text)
+  view_score = extractor.get_view_score(description_inner.text)
 
   # print(f"""
   #   video_name = {video_name}
   #   collection_date = {collection_date}
   #   start_date = {start_date}
   #   hash_tag = {hash_tag}
+  #   view_score = {view_score}
   # """)
 
   return [video_name,collection_date,start_date,hash_tag,view_score]
