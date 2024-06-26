@@ -8,11 +8,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
-from parallelism.summary.collectdata.collection_date import get_collection_date
-from parallelism.summary.collectdata.hash_tag import get_hash_tag
-from parallelism.summary.collectdata.start_date import get_start_date
-from parallelism.summary.collectdata.video_name import get_video_name
-from parallelism.summary.collectdata.view_score import get_view_score
+from src.summary.collectdata.collection_date import get_collection_date
+from src.summary.collectdata.hash_tag import get_hash_tag
+from src.summary.collectdata.start_date import get_start_date
+from src.summary.collectdata.video_name import get_video_name
+from src.summary.collectdata.view_score import get_view_score
 
 
 def generate_summary_csv(url,folder):

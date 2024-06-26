@@ -4,9 +4,9 @@ import pytchat
 import pandas as pd
 from collections import defaultdict
 
-from parallelism.exception.CustomException import CustomException
-from parallelism.exception.EmptyLiveChatException import EmptyLiveChatException
-from parallelism.exception.LiveChatUnknownException import \
+from src.exception.CustomException import CustomException
+from src.exception.EmptyLiveChatException import EmptyLiveChatException
+from src.exception.LiveChatUnknownException import \
     LiveChatUnknownException
 
 

@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 
-from parallelism.parser.url_parser import url_by_channel_id
+from src.parser.url_parser import url_by_channel_id
 
 VIDEO_TABLE_ELEMENTS = "div[id='content'] div[class='style-scope ytd-rich-item-renderer']"
 WEB_DRIVER_WAIT_TIMEOUT = 10

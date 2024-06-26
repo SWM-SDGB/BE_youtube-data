@@ -1,13 +1,13 @@
 import asyncio
 import ray
-from parallelism.exception.error_handling import error_handling
-from parallelism.lock.SystemMutex import SystemMutex
-from parallelism.parser.url_parser import get_video_id
-from parallelism.summary.summary_generate import generate_summary_csv
-from parallelism.core.crwaling.youtube_livechat_crawling_nonBuffer import live_chat
-from parallelism.core.crwaling.youtube_parsing_viewing_distribution import html_parsing
-from parallelism.core.crwaling.youtube_video_down import get_video_sound
-from parallelism import globals
+from src.exception.error_handling import error_handling
+from src.lock.SystemMutex import SystemMutex
+from src.parser.url_parser import get_video_id
+from src.summary.summary_generate import generate_summary_csv
+from src.core.crwaling.youtube_livechat_crawling_nonBuffer import live_chat
+from src.core.crwaling.youtube_parsing_viewing_distribution import html_parsing
+from src.core.crwaling.youtube_video_down import get_video_sound
+from src import globals
 
 @ray.remote
 def args_process(url, index, folder):

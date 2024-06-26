@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 import re
 import json
 
-from parallelism.exception.CustomException import CustomException
-from parallelism.exception.EmptyViewingDistributionException import \
+from src.exception.CustomException import CustomException
+from src.exception.EmptyViewingDistributionException import \
     EmptyViewingDistributionException
-from parallelism.exception.ParseViewingUnknownException import \
+from src.exception.ParseViewingUnknownException import \
     ParseViewingUnknownException
 
 

@@ -1,9 +1,9 @@
 import argparse
 import ray
 
-from parallelism import globals
-from parallelism.core.ray.ray_process_args import args_process
-from parallelism.youtube_parallelism_crawling import ray_execute
+from src import globals
+from src.core.ray.ray_process_args import args_process
+from src.youtube_parallelism_crawling import ray_execute
 
 # 명령행 인자를 사용하여 옵션을 조절하도록 구성합니다.
 if __name__ == "__main__":

@@ -3,8 +3,8 @@ import sys
 import time
 import ray
 
-from parallelism.core.ray.ray_process_legacy import process
-from parallelism.core.crwaling.youtube_live_video_list_crawling import get_video_urls_by_selenium
+from src.core.ray.ray_process_legacy import process
+from src.core.crwaling.youtube_live_video_list_crawling import get_video_urls_by_selenium
 
 ray.init(num_cpus=10, dashboard_host="0.0.0.0")
 channel_id = "@15ya.fullmoon"
