@@ -1,6 +1,6 @@
 import asyncio
 import ray
-from parallelism.exception.error_handling import errorHandling
+from parallelism.exception.error_handling import error_handling
 from parallelism.lock.SystemMutex import SystemMutex
 from parallelism.parser.url_parser import get_video_id
 from parallelism.summary.summary_generate import generate_summary_csv
@@ -25,7 +25,7 @@ def args_process(url, index, folder):
     with SystemMutex('critical-section'):
       generate_summary_csv(url,folder)
   except Exception as e:
-    errorHandling(e, url, video_id)
+    error_handling(e, url, video_id)
 
 async def gather(tasks):
   await asyncio.gather(*tasks)

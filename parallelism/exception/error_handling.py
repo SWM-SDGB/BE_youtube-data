@@ -1,20 +1,22 @@
 import os
 import traceback
 
+"""
+하나의 비디오에 대해 데이터 수집 중 예외가 발생할 경우 실패로 간주. 생성된 파일을 삭제합니다.
+"""
 
-def errorHandling(e, url, videoId):
+def error_handling(custom_error, url, video_id):
   try:
-    print(f"Error processing {url}: {e.message}")
+    print(f"Error processing {url}: {custom_error.message}")
   except AttributeError:
     print("[Unknown Error]")
     traceback.print_exc()
-  csv_file = videoId + ".csv"
-  json_file = videoId + ".json"
-  audio_file = videoId + ".m4a"
-  if os.path.exists(csv_file):
-    os.remove(csv_file)
-  if os.path.exists(json_file):
-    os.remove(json_file)
-  if os.path.exists(audio_file):
-    os.remove(audio_file)
-  pass
+
+  # 생성되는 파일 확장자 목록
+  extensions = [".csv", ".json", ".m4a"]
+
+  # 파일 삭제
+  for extension in extensions:
+    file = f"{video_id}{extension}"
+    if os.path.exists(file):
+      os.remove(file)

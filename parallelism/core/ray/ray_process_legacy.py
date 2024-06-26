@@ -1,7 +1,7 @@
 import asyncio
 import ray
 
-from parallelism.exception.error_handling import errorHandling
+from parallelism.exception.error_handling import error_handling
 from parallelism.lock.SystemMutex import SystemMutex
 from parallelism.parser.url_parser import get_video_id
 from parallelism.summary.summary_generate import generate_summary_csv
@@ -21,7 +21,7 @@ def process(url, index, folder):
     with SystemMutex('critical-section'):
       generate_summary_csv(url,folder)
   except Exception as e:
-    errorHandling(e,url,videoId)
+    error_handling(e, url, videoId)
 
 
 async def async_process(url, video_id, folder):

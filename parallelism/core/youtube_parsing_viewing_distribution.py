@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import re
 import json
 
+from parallelism.exception.CustomException import CustomException
 from parallelism.exception.EmptyViewingDistributionException import \
     EmptyViewingDistributionException
 from parallelism.exception.ParseViewingUnknownException import \
@@ -55,6 +56,6 @@ async def html_parsing(url, videoId, folder):
                     json.dump(markers, json_file, indent=4)
             except Exception as e:
                 if type(e).__name__ == "KeyError":
-                    raise EmptyViewingDistributionException()
+                    raise CustomException("분포데이터가 없습니다.")
                 else:
-                    raise ParseViewingUnknownException()
+                    raise CustomException("[Parse Viewing] 알 수 없는 ERROR")

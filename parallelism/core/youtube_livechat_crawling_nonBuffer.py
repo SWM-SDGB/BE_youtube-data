@@ -4,6 +4,7 @@ import pytchat
 import pandas as pd
 from collections import defaultdict
 
+from parallelism.exception.CustomException import CustomException
 from parallelism.exception.EmptyLiveChatException import EmptyLiveChatException
 from parallelism.exception.LiveChatUnknownException import \
     LiveChatUnknownException
@@ -36,6 +37,6 @@ async def live_chat(videoId, folder):
             if type(e).__name__ == "ChatDataFinished":
                 pass
             elif type(e).__name__ == "NoContents":
-                raise EmptyLiveChatException()
+                raise CustomException("채팅 데이터가 없습니다")
             else:
-                raise LiveChatUnknownException()
+                raise CustomException("[live_chat] 알 수 없는 ERROR")
