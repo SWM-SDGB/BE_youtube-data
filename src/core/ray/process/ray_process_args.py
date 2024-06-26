@@ -9,6 +9,11 @@ from src.core.crwaling.youtube_parsing_viewing_distribution import html_parsing
 from src.core.crwaling.youtube_video_down import get_video_sound
 from src import globals
 
+"""
+커맨드 실행 명령으로 작동하는 Process 입니다.
+옵션을 통해 실행할 task를 지정할 수 있습니다.
+"""
+
 @ray.remote
 def args_process(url, index, folder):
   video_id = get_video_id(url)
@@ -21,12 +26,12 @@ def args_process(url, index, folder):
   if globals.args["sound"]:
     tasks.append(get_video_sound(url, video_id, folder))
   try:
-    asyncio.run(gather(tasks))
+    asyncio.run(async_task(tasks))
     with SystemMutex('critical-section'):
       generate_summary_csv(url,folder)
   except Exception as e:
     error_handling(e, url, video_id)
 
-async def gather(tasks):
+async def async_task(tasks):
   await asyncio.gather(*tasks)
 

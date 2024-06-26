@@ -2,8 +2,8 @@ import argparse
 import ray
 
 from src import globals
-from src.core.ray.ray_process_args import args_process
-from src.youtube_parallelism_crawling import ray_execute
+from src.core.ray.process.ray_process_args import args_process
+from src.__main__ import ray_execute
 
 # 명령행 인자를 사용하여 옵션을 조절하도록 구성합니다.
 if __name__ == "__main__":
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     """)
 
   ray.init(num_cpus=globals.args["cpus"], dashboard_host="0.0.0.0", ignore_reinit_error=True)
-  ray_execute(globals.args["channel_id"], args_process, globals.args["folder"])
+  ray_execute(args_process)
