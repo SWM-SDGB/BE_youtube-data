@@ -10,7 +10,10 @@ from src import globals
 from src.core.crwaling.youtube_live_video_list_crawling import \
   get_video_urls_by_selenium
 
-
+"""
+ray_process 를 인자로 받아 실행킵니다.
+상황에따라 Ray_process를 새로 작성하고 사용할 수 있습니다.
+"""
 def ray_execute(ray_process_func):
 
   channel_id = globals.args["channel_id"]

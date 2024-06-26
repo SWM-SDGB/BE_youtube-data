@@ -1,3 +1,7 @@
+"""
+전역으로 관리되는 변수파일입니다.
+"""
+
 args = {"viewing": False,
         "chat": False,
         "all": False,
