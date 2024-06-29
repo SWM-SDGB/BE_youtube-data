@@ -1,12 +1,14 @@
 # BE_youtube-data
 
-### Youtube 영상 다운로드 오픈소스
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp)
-
 ---
 ### 셀레니움 코드 동작을 위해서는 크롬드라이버가 설치되어 있어야 합니다.
 - [Window](https://spectrum20.tistory.com/entry/python-Selenium-%ED%81%AC%EB%A1%AC-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80) 
 - [Mac](https://ddingmin00.tistory.com/entry/mac-m1-%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81-Selenium-Chromedriver-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+
+---
+### 흐름도
+![스크린샷 2024-06-30 오전 1 05 45](https://github.com/SWM-SDGB/BE_youtube-data/assets/47974623/c3ac4382-36bb-4443-b580-4dc8d4406848)
+
 
 ---
 
@@ -39,7 +41,7 @@
 다음 예시는 모든 기능을 사용하여 YouTube 비디오에서 데이터를 추출하는 방법을 보여줍니다.
 
 ```bash
-python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder
+python sdgb.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder
 ```
 
 #### 개별 기능 실행:
@@ -49,19 +51,19 @@ python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/fo
 - **HTML 파싱만 실행:**
 
   ```bash
-  python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --viewing
+  python sdgb.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --viewing
   ```
 
 - **실시간 채팅 추출만 실행:**
 
   ```bash
-  python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --chat
+  python sdgb.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --chat
   ```
 
 - **오디오 추출만 실행:**
 
   ```bash
-  python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --sound
+  python sdgb.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --sound
   ```
 
 #### 선택적 옵션 활용:
@@ -73,7 +75,7 @@ python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/fo
   예를 들어, 시청 분포 파싱과 실시간 채팅 추출만 실행하려면 다음과 같이 입력합니다.
 
   ```bash
-  python your_script.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --viewing --chat
+  python sdgb.py --channel_id ABCDEFGHIJ --cpus 4 --folder /path/to/save/folder --viewing --chat
   ```
 
 ### 상세 정보
