@@ -1,3 +1,4 @@
+from ray.util.client import ray
 
 from src import globals
 from src.core.ray.process.ray_process import process
@@ -11,6 +12,7 @@ if __name__ == "__main__":
     globals.args["folder"] = default_folder
     globals.args["cpus"] = 10
 
+    ray.init(num_cpus=globals.args["cpus"], dashboard_host="0.0.0.0",ignore_reinit_error=True)
     ray_execute(process)
 
 
