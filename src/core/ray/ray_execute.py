@@ -39,7 +39,7 @@ def ensure_folder_exists(folder_path):
     print(f"Folder '{folder_path}' created.")
   else:
     print(f"Folder '{folder_path}' already exists.")
-    overwrite = input("그대로 진행하시겠습니까? (Y/N): ").strip().lower()
+    overwrite = input("그대로 진행하시겠습니까? (Y/N): ").replace(" ","").strip().lower()
     if overwrite == 'y':
       print("기존 폴더를 유지합니다.")
     elif overwrite == 'n':
