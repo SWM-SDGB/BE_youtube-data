@@ -25,8 +25,7 @@ def proccess(url, index, folder):
 
     try:
         asyncio.run(async_process(url, videoId, folder))
-        with SystemMutex('critical-section'):
-            generate_summary_csv(url,folder)
+        generate_summary_csv(url,folder) ## 동시성 문제를 발생시킬 확률이 낮아 확인하기 어려움
     except Exception as e:
         try:
             print(f"Error processing {url}: {e.message}")
@@ -46,7 +45,8 @@ def proccess(url, index, folder):
 
 
 async def async_process(url, video_id, folder):
-    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder), get_video_sound(url, video_id, folder))
+    # 테스트 시간 관계상 음성다운로드 task 제거
+    await asyncio.gather(html_parsing(url, video_id, folder), live_chat(video_id, folder))
                          
 
 

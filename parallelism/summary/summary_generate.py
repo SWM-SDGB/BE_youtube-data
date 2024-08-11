@@ -71,5 +71,39 @@ def save_to_csv(summary_data, filename):
     writer.writerow(summary_data)
 
 
-if __name__ == '__main__':
-  generate_summary_csv('https://www.youtube.com/watch?v=MPf9LfHZEGs',"../")
+# if __name__ == '__main__':
+#   generate_summary_csv('https://www.youtube.com/watch?v=MPf9LfHZEGs',"../")
+
+# 동시성 문제를 유발할 함수
+def thread_task(filename, thread_id):
+  for i in range(100):
+    summary_data = [f'video_{thread_id}_{i}', '2024-08-11', '2024-08-10', f'#tag{thread_id}', i]
+    with SystemMutex('critical-section'):
+      save_to_csv(summary_data, filename)
+# mutex task
+def thread_safe_task(filename, thread_id):
+  for i in range(100):
+    summary_data = [f'video_{thread_id}_{i}', '2024-08-11', '2024-08-10', f'#tag{thread_id}', i]
+    with SystemMutex('critical-section'):
+      save_to_csv(summary_data, filename)
+
+# 메인 실행 코드
+if __name__ == "__main__":
+  filename = 'output.csv'
+
+  # 기존 파일 삭제 (실행 시마다 새로운 파일 생성)
+  if os.path.exists(filename):
+    os.remove(filename)
+
+  # 10개의 쓰레드를 생성하여 동시에 save_to_csv 호출
+  threads = []
+  for thread_id in range(10):
+    thread = threading.Thread(target=thread_task, args=(filename, thread_id))
+    threads.append(thread)
+    thread.start()
+
+  # 모든 쓰레드가 종료될 때까지 대기
+  for thread in threads:
+    thread.join()
+
+  print("CSV 파일 작성 완료")
