@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>GET /store-owner/logout API 문서</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script>
+      function toggleNotes() {
+        var notesSection = document.getElementById('notes-section');
+        if (notesSection.style.display === 'none') {
+          notesSection.style.display = 'block';
+        } else {
+          notesSection.style.display = 'none';
+        }
+      }
+    </script>
+    <style>
+      /* 기존 스타일 유지 */
+      .audience-tags {
+        margin-bottom: 10px;
+      }
+      .audience-tag {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 5px 10px;
+        margin-right: 5px;
+        border-radius: 5px;
+      }
+      .action-buttons {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .action-buttons button {
+        margin-right: 10px;
+      }
+      #update-history {
+        margin-left: 5px;
+      }
+      #request-response-section {
+        margin-top: 20px;
+      }
+      #request-response-header {
+        display: flex;
+        align-items: center;
+      }
+      #execute-button, #reset-button {
+        margin-right: 10px;
+      }
+      #request-response-body {
+        display: flex;
+        justify-content: space-between;
+      }
+      #request-container, #response-container {
+        width: 48%;
+      }
+      pre {
+        background-color: #f8f8f8;
+        padding: 10px;
+        overflow: auto;
+      }
+      /* 예제 코드 섹션 스타일 */
+      #code-examples {
+        margin-top: 20px;
+      }
+      .tab {
+        overflow: hidden;
+        border-bottom: 1px solid #ccc;
+      }
+      .tab button {
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        font-size: 16px;
+      }
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      .tab button.active {
+        background-color: #ccc;
+      }
+      .tabcontent {
+        display: none;
+        padding: 10px 0;
+      }
+      .tabcontent pre {
+        margin-top: 0;
+      }
+    </style>
+</head>
+<body>
+
+<!-- 대상 독자 태그 -->
+
+    <div class="audience-tags">
+        
+            <span class="audience-tag">FE</span>
+        
+    </div>
+
+
+<h1>GET /store-owner/logout</h1>
+
+<!-- 메모하기 버튼 및 업데이트 히스토리 드롭다운 -->
+<div class="action-buttons">
+    <button onclick="toggleNotes()">메모하기</button>
+    
+</div>
+
+<p><strong>Summary:</strong> 로그아웃</p>
+
+
+    
+    <p>스토어 소유자 계정에서 로그아웃합니다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h2>응답</h2>
+    
+        
+        <h3><span class="status-badge status-200">200</span> 성공적인 로그아웃 수행</h3>
+        
+    
+        
+        <h3><span class="status-badge status-401">401</span> 인증 실패 - 로그인하지 않은 사용자</h3>
+        
+            
+                <p><strong>Content-Type:</strong> application/json</p>
+                
+                
+                    <table class="schema-table"><thead><tr><th>필드명</th><th>타입</th><th>설명</th></tr></thead><tbody><tr><td>errorCode</td><td>string</td><td data-editable="true" data-field-name="/store-owner/logout/응답/string 설명">오류 코드</td></tr><tr><td>errorMessage</td><td>string</td><td data-editable="true" data-field-name="/store-owner/logout/응답/string 설명">오류 메시지</td></tr></tbody></table>
+                
+            
+        
+    
+
+
+<!-- 실제 요청 섹션 -->
+<div id="request-response-section">
+    <div id="request-response-header">
+        <button id="execute-button" onclick="executeRequest()">실제 요청</button>
+        <button id="reset-button" onclick="resetResponse()">초기화</button>
+    </div>
+    <div id="request-response-body">
+        <div id="request-container">
+            <h3>요청 JSON</h3>
+            <pre><code id="request-json"></code></pre>
+        </div>
+        <div id="response-container">
+            <h3>응답 JSON</h3>
+            <pre><code id="response-json"></code></pre>
+        </div>
+    </div>
+</div>
+
+<!-- 예제 코드 섹션을 요청/응답 섹션 하단으로 이동 -->
+<div id="code-examples">
+    <h2>예제 코드</h2>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'curl')">cURL</button>
+        <button class="tablinks" onclick="openTab(event, 'javascript')">JavaScript</button>
+        <button class="tablinks" onclick="openTab(event, 'python')">Python</button>
+        <!-- 필요한 경우 다른 언어들의 버튼을 추가하세요 -->
+    </div>
+
+    <!-- 각 언어별 코드 탭 콘텐츠 -->
+    <div id="curl" class="tabcontent">
+        <pre><code>curl -X GET "/store-owner/logout" -H "Content-Type: application/json"</code></pre>
+    </div>
+    <div id="javascript" class="tabcontent">
+        <pre><code>fetch('/store-owner/logout', {
+  method: 'GET',
+  headers: {
+  "Content-Type": "application/json"
+},
+  body: undefined
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));</code></pre>
+    </div>
+    <div id="python" class="tabcontent">
+        <pre><code>import requests
+
+url = '/store-owner/logout'
+headers = {
+  "Content-Type": "application/json"
+}
+data = {}
+
+response = requests.get(
+    url,
+    headers=headers,
+    json=data
+)
+
+print(response.json())</code></pre>
+    </div>
+    <!-- 필요한 경우 다른 언어들의 콘텐츠를 추가하세요 -->
+</div>
+
+<!-- 메모하기 섹션 -->
+<div id="notes-section" style="display: none;">
+    <h3>메모</h3>
+    <textarea rows="10" cols="80"></textarea>
+</div>
+
+<script>
+  // 예시 데이터를 JavaScript 변수로 전달
+  var exampleRequestData = {};
+  var exampleResponseData = {"errorCode":"string","errorMessage":"string"};
+  var baseUrl = '';
+  var path = '/store-owner/logout';
+  var method = 'GET';
+
+  // 초기 상태로 요청 및 응답 JSON 표시
+  document.getElementById('request-json').textContent = JSON.stringify(exampleRequestData, null, 2);
+  document.getElementById('response-json').textContent = JSON.stringify(exampleResponseData, null, 2);
+
+  function executeRequest() {
+    var url = baseUrl + path;
+    console.log("Request URL: " + url);
+
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: method !== 'GET' ? JSON.stringify(exampleRequestData) : undefined
+    })
+    .then(response => {
+      if (!response.ok) {
+        // HTTP 오류 상태 코드 처리
+        return response.text().then(text => {
+          throw new Error('HTTP 오류 ' + response.status + ':\n' + text);
+        });
+      }
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        return response.text().then(text => {
+          throw new Error('JSON 형식이 아닌 응답을 받았습니다:\n' + text);
+        });
+      }
+    })
+    .then(data => {
+      document.getElementById('response-json').textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+      document.getElementById('response-json').textContent = '요청 중 오류 발생:\n' + error.message;
+    });
+  }
+
+  function resetResponse() {
+    document.getElementById('response-json').textContent = JSON.stringify(exampleResponseData, null, 2);
+  }
+
+  // 탭 기능 구현
+  function openTab(evt, language) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(language).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // 기본적으로 첫 번째 탭 열기
+  document.getElementsByClassName('tablinks')[0].click();
+</script>
+
+</body>
+</html>
+
